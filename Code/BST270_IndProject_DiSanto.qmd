@@ -1,0 +1,184 @@
+---
+title: "BST 270: Final Project"
+author: "Dominic DiSanto"
+format:
+   # pdf:
+     # df-print: kable
+     # toc: true
+  html:
+    code-line-numbers: true
+    code-fold: true
+    # df-print: kable
+    toc: true
+  
+execute:
+  warning: false
+  message: false
+  # echo: false
+editor: visual
+---
+
+# Set-Up
+
+```{r}
+library(here) # used for file management
+library(ggplot2) # data visualization 
+library(dplyr) # data wrangling 
+library(stringr) # data wrangling (string detection, manipulation)
+library(kableExtra) # table styling 
+```
+
+# Preface 
+
+Tables were generated using the `gt` package and visualization using `ggplot2` from the Tidyverse. This document was generated using [Quarto](https://quarto.org/) in RStudio. Additional details are available in the Appendix.
+
+# 538 Article
+
+From Carl Biakin's article ["Why Some Tennis Matches Take Forever"](https://fivethirtyeight.com/features/why-some-tennis-matches-take-forever/), we will recreate his second table (summarizing the tennis players with the fastest and slowest pace of play, with other notable players included) and figure (visualizing the career changes in pace for Roger Federer, Andy Murray, Novak Djokovic, and Rafael Nadal). Data is available from 538's GitHub (https://github.com/fivethirtyeight/data/tree/master/tennis-time).
+
+## Figure 1 
+
+We will first examine the original figure from Bialik's article: 
+
+```{r out.width="800px"}
+knitr::include_graphics(here("Images", "bialik-tennis-time-chart1.png"))
+```
+
+```{r}
+cases
+```
+
+## Table 1 
+
+## Table 2 
+
+First we can review the original table(s) presented in the article: 
+
+```{r out.width="800px"}
+knitr::include_graphics(here("Images", "bialik-tennis-time-table1.png"))
+```
+
+Now we can begin attempting to recreate this table.   
+  
+First, we generate generate each of the three tables included in the image above, using the `players_time.csv` table. Player rank (the integer column) was generated as noted below, player name taken from the `player` column, and the added time from the `seconds_added_per_point` column:
+
+
+```{r}
+players <- read.csv(here("Data", "players_time.csv")) %>% 
+  mutate(Rank=row_number()) # adding the "Rank" variable (the integers in each table above), descending (1=fastest player, lowest `seconds_added_per_point`)
+
+# Top 10 Fastest Players (lower [or more negative] seconds_added_per_point is faster pace of play)
+t10_f <- players %>% 
+  arrange(seconds_added_per_point) %>% # sort by ascending order (lower seconds added = faster player)
+  head(10) %>% # top 10
+  mutate(seconds = # reformatting as string to include the "s" for the first observation, matching the original table's formatting
+           case_when(row_number()==1 ~ paste0(sprintf("%0.2f", seconds_added_per_point)
+                                              , "s")
+                     , T ~ sprintf("%0.2f", seconds_added_per_point)
+                     )
+         ) %>% 
+  select(Rank, player, seconds) 
+
+# "Top" 10 slowest players (largest values)
+t10_s <- players %>% 
+  arrange(desc(seconds_added_per_point)) %>%
+  head(10) %>%
+  arrange(seconds_added_per_point) %>% 
+  mutate(seconds =
+           case_when(row_number()==1 ~ paste0(sprintf("%0.2f", seconds_added_per_point)
+                                              , "s")
+                     , T ~ sprintf("%0.2f", seconds_added_per_point)
+                     )
+         ) %>% 
+  select(Rank, player, seconds) 
+
+# Specific players ("notable") taken from the full data set
+tbl_pls <- players %>% 
+  filter(str_detect(player, "Goran|Roger Fed|Novak Djok|Andy Murray|Pat Cash|Ivan Lend|Jim Courier|Jimmy Connors")) %>% 
+  arrange(seconds_added_per_point) %>% 
+  mutate(seconds =
+           case_when(row_number()==1 ~ paste0(sprintf("%0.2f", seconds_added_per_point)
+                                              , "s")
+                     , T ~ sprintf("%0.2f", seconds_added_per_point)
+                     )
+         ) %>% 
+  select(Rank, player, seconds) 
+
+
+```
+
+We now must arrange the tables, set custom options to attempt to mirror the 538 style, and include the descriptive information to mirror the image as presented in Biakis's article. I use the `gt` package, which allows me to supply custom styling and arrange each individual table together into one image/table. 
+
+```{r}
+library(ggplot2)
+library(gt); library(gtExtras)
+
+gt_fast <- t10_f %>% 
+  gt() %>% 
+  gt::tab_header("Fastest players") %>% 
+  gt::tab_options(column_labels.hidden = T) %>% 
+  gt_theme_538() %>% 
+  gt::as_raw_html()
+
+gt_slow <- t10_s %>% 
+  gt() %>% 
+  gt::tab_header("Slowest players") %>% 
+  gt::tab_options(column_labels.hidden = T) %>% 
+  gt_theme_538() %>% 
+  gt::as_raw_html()
+
+gt_ntbl <- tbl_pls %>% 
+  gt() %>% 
+  gt::tab_header("Other notable players") %>% 
+  gt::tab_options(column_labels.hidden = T) %>% 
+  gt_theme_538() %>% 
+  gt::as_raw_html()
+
+rbind(data.frame(t1=gt_fast, t2=gt_slow)
+      , data.frame(t1=gt_ntbl, t2="")) %>% 
+# data.frame(gtf=c(gt_fast, gt_ntbl), gts=c(gt_slow, '')) %>% 
+  gt() %>% 
+  gt::tab_header(title = "Player Speeds"
+                 , subtitle="Average time added per point in men's tennis"
+                 ) %>% 
+  opt_align_table_header(align = "left") %>% 
+  fmt_markdown(columns=everything()) %>% 
+  gt::tab_options(column_labels.hidden=T) %>% 
+  gtExtras::gt_theme_538() %>% 
+  gt::tab_style(style = list(cell_text(weight="bold"))
+                , location=cells_body(columns=1) )
+```
+
+## Figure 2 
+
+```{r}
+knitr::include_graphics(here("Images", "bialik-tennis-time-chart2.png"))
+```
+
+# Appendix 
+
+```{r}
+sessionInfo()
+```
+
+<!-- # COVID Figure & Table  -->
+
+<!-- ## Goal -->
+
+<!-- To recreate the following table & figure:  -->
+
+<!-- ![](nyt1.png){ width=75% } -->
+
+<!-- ## Code  -->
+
+<!-- #### Data Import  -->
+
+<!-- ```{r} -->
+
+<!-- ``` -->
+
+<!-- #### Figure  -->
+
+<!-- #### Table  -->
+
+<!-- ## Re-creation:  -->

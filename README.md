@@ -3,22 +3,15 @@ Individual project for BST270: Reproducible Data Science
 Dominic DiSanto
 January Session 2023
 
-# Figure 1
 
-## Article & Data
+# Article & Background
 
-## Code
+https://fivethirtyeight.com/features/why-some-tennis-matches-take-forever/
+by Carl Bialik
 
-
-# Table 1
-
-## Article & Data
-
-## Code
+# Code
 
 
-# Figure 2
+# Data & Figures
 
-## Article & Data
-
-## Code
+https://github.com/fivethirtyeight/data/tree/master/tennis-time
