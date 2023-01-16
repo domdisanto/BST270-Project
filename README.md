@@ -5,8 +5,7 @@
 
 Individual project for BST270: Reproducible Data Science
 
-Final submission PDF can be accessed via GitHub at [Code/BST270_IndProject_DiSanto.pdf](/Code/BST270_IndProject_DiSanto.pdf) (
-https://github.com/domdisanto/BST270-Project/blob/main/Code/BST270_IndProject_DiSanto.pdf) or downloaded directly by [clicking this link](https://github.com/domdisanto/BST270-Project/raw/main/Code/BST270_IndProject_DiSanto.pdf).
+Final submission PDF can be accessed via GitHub at [Code/BST270_IndProject_DiSanto.pdf](/Code/BST270_IndProject_DiSanto.pdf) or downloaded directly by [clicking this link](https://github.com/domdisanto/BST270-Project/raw/main/Code/BST270_IndProject_DiSanto.pdf).
 
 # Articles & Background
 
