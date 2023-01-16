@@ -22,17 +22,11 @@ editor: visual
 
 # Set-Up
 
-```{r}
-library(here) # used for file management
-library(ggplot2) # data visualization 
-library(dplyr) # data wrangling 
-library(stringr) # data wrangling (string detection, manipulation)
-library(kableExtra) # LaTeX/PDF table styling 
-library(knitr)
-```
 
 ```{r, echo=F}
 # chunk to hide code and display at end, under Appendix Section A 
+library(knitr)
+
 delay_code_labels <- NULL
 knit_hooks$set(delay = function(before, options, envir) {
     if (before) {
@@ -45,6 +39,20 @@ knit_hooks$set(delay = function(before, options, envir) {
 opts_chunk$set(delay = TRUE, echo = FALSE, message = FALSE, warning = FALSE,
                fig.width = 6, fig.asp = 0.618)
 ```
+
+```{r}
+################ 
+#### Set-Up ####
+################
+
+library(here) # used for file management
+library(ggplot2) # data visualization 
+library(dplyr) # data wrangling 
+library(stringr) # data wrangling (string detection, manipulation)
+library(kableExtra) # LaTeX/PDF table styling 
+library(knitr)
+```
+
 
 
 # Preface
@@ -61,41 +69,58 @@ Each article has a brief section that displays the original table(s) or figure f
 From Carl Bialik's article ["Why Some Tennis Matches Take Forever"](https://fivethirtyeight.com/features/why-some-tennis-matches-take-forever/), we will recreate his two tables (included below). 
 
 ```{r}
+###################
+### Data Import ###
+###################
+
 events <- read.csv(here("Data", "tennis-time", "events_time.csv"), header=T) %>% 
   mutate(Rank=row_number())
 
 players <- read.csv(here("Data", "tennis-time", "players_time.csv")) %>% 
-  mutate(Rank=row_number()) # adding the "Rank" variable (the integers in each table above), descending (1=fastest player, lowest `seconds_added_per_point`)
+  mutate(Rank=row_number()) # adding the "Rank" variable (the integers in each table
+            # above), descending (1=fastest player, lowest `seconds_added_per_point`)
 ```
 
 
 ## Table 1: Events 
 
+
+### Original 
+
 We will first look at the original table from Bialik's article: 
 
+
 ```{r out.width="300px"}
+
+
 ###############
 ### Table 1 ### 
 ###############
 
+# Original 
 knitr::include_graphics(here("Images", "tennis-time", "bialik-tennis-time-table21.png"))
 
 ```
 
 
+### Re-creation
 
 The data used to recreate these tables is located in Bialik's provided `events.csv` file. 
 \newpage 
 
 
 ```{r}
+# Re-creation
+
 events_10f <- events %>% 
   arrange(seconds_added_per_point) %>% 
   head(10)  %>% 
-  mutate(seconds = # reformatting as string to include the "s" for the first observation, matching the original table's formatting
+  mutate(seconds = # reformatting as string to include the "s" for first obs
            case_when(row_number()==1 ~ paste0(sprintf("%0.2f", seconds_added_per_point)
                                               , "s")
-                     , T ~ sprintf("%0.2f", seconds_added_per_point)
+                     , seconds_added_per_point<0 ~ sprintf("%0.2f", seconds_added_per_point)
+                     , T ~ paste0("+",
+                          sprintf("%0.2f", seconds_added_per_point))
                      )
          ) %>% 
   select(Rank, tournament, surface, years, seconds)
@@ -104,21 +129,23 @@ events_10s <- events %>%
   mutate(Rank=row_number()) %>% 
   arrange(desc(seconds_added_per_point)) %>% 
   head(10)  %>% 
-  mutate(seconds = # reformatting as string to include the "s" for the first observation, matching the original table's formatting
-           case_when(row_number()==1 ~ paste0(sprintf("%0.2f", seconds_added_per_point)
+  arrange(seconds_added_per_point) %>% 
+  mutate(seconds = # reformatting as string to include the "s" for the first obs
+           case_when(row_number()==1 ~ paste0("+"
+                                        , sprintf("%0.2f", seconds_added_per_point)
                                               , "s")
-                     , T ~ sprintf("%0.2f", seconds_added_per_point)
+                     , seconds_added_per_point<0 ~ sprintf("%0.2f", seconds_added_per_point)
+                     , T ~ paste0("+", sprintf("%0.2f", seconds_added_per_point))
                      )
          ) %>% 
-  arrange(seconds_added_per_point) %>% 
   select(Rank, tournament, surface, years, seconds)
 
 events_ntbl <- events %>% 
   filter(str_detect(tournament, "US Op|Australian Open|Roland Garr")) %>% 
-  mutate(seconds = # reformatting as string to include the "s" for the first observation, matching the original table's formatting
-           case_when(row_number()==1 ~ paste0(sprintf("%0.2f", seconds_added_per_point)
-                                              , "s")
-                     , T ~ sprintf("%0.2f", seconds_added_per_point)
+  mutate(seconds = # reformatting as string to include the "s" for the first obs
+           case_when(row_number()==1 ~ paste0(sprintf("%0.2f", seconds_added_per_point), "s")
+                     , seconds_added_per_point<0 ~ sprintf("%0.2f", seconds_added_per_point)
+                     , T ~ paste0("+", sprintf("%0.2f", seconds_added_per_point))
                      )
          ) %>% 
   select(Rank, tournament, surface, years, seconds)
@@ -160,12 +187,18 @@ events_ntbl %>%
 
 ## Table 2: Players
 
+### Original 
+
 Again, we first we can review the original table(s) presented in the article:
 
 ```{r out.width="450px"}
+
+
 ###############
 ### Table 2 ### 
 ###############
+
+# Original
 
 knitr::include_graphics(here("Images", "tennis-time", "bialik-tennis-time-table1.png"))
 
@@ -173,19 +206,24 @@ knitr::include_graphics(here("Images", "tennis-time", "bialik-tennis-time-table1
 
 \newpage 
 
+### Re-creation
+
 Now we can begin attempting to recreate this table, doing our best to mirror the format of the 538 results shown above in structure/formatting.
 
 We generate generate each of the three tables included in the image above, using the `players_time.csv` table. Player rank (the integer column) was generated as noted below, player name taken from the `player` column, and the added time from the `seconds_added_per_point` column:
 
 ```{r}
-# Top 10 Fastest Players (lower [or more negative] seconds_added_per_point is faster pace of play)
+# Re-creation 
+
+# Top 10 Fastest Players (lower/more negative seconds_added_per_point is faster pace)
 t10_f <- players %>% 
-  arrange(seconds_added_per_point) %>% # sort by ascending order (lower seconds added = faster player)
+  arrange(seconds_added_per_point) %>% # sort ascending 
   head(10) %>% # top 10
-  mutate(seconds = # reformatting as string to include the "s" for the first observation, matching the original table's formatting
-           case_when(row_number()==1 ~ paste0(sprintf("%0.2f", seconds_added_per_point)
+  mutate(seconds = # reformatting as above
+           case_when(row_number()==1 ~ paste0("+", sprintf("%0.2f", seconds_added_per_point)
                                               , "s")
-                     , T ~ sprintf("%0.2f", seconds_added_per_point)
+                     , T ~ sprintf("%0.2f"
+                                   , seconds_added_per_point)
                      )
          ) %>% 
   select(Rank, player, seconds) 
@@ -198,19 +236,24 @@ t10_s <- players %>%
   mutate(seconds =
            case_when(row_number()==1 ~ paste0(sprintf("%0.2f", seconds_added_per_point)
                                               , "s")
-                     , T ~ sprintf("%0.2f", seconds_added_per_point)
+                     , seconds_added_per_point<0 ~ sprintf("%0.2f", seconds_added_per_point)
+                     , T ~ paste0("+"
+                              , sprintf("%0.2f", seconds_added_per_point))
                      )
          ) %>% 
   select(Rank, player, seconds) 
 
 # Specific players ("notable") taken from the full data set
 tbl_pls <- players %>% 
-  filter(str_detect(player, "Goran|Roger Fed|Novak Djok|Andy Murray|Pat Cash|Ivan Lend|Jim Courier|Jimmy Connors")) %>% 
+  filter(
+    str_detect(player
+, "Goran|Roger Fed|Novak Djok|Andy Murray|Pat Cash|Ivan Lend|Jim Courier|Jimmy Connors")) %>% 
   arrange(seconds_added_per_point) %>% 
   mutate(seconds =
            case_when(row_number()==1 ~ paste0(sprintf("%0.2f", seconds_added_per_point)
                                               , "s")
-                     , T ~ sprintf("%0.2f", seconds_added_per_point)
+                     , seconds_added_per_point<0 ~ sprintf("%0.2f", seconds_added_per_point)
+                     , T ~ paste0("+", sprintf("%0.2f", seconds_added_per_point))
                      )
          ) %>% 
   select(Rank, player, seconds) 
@@ -318,10 +361,15 @@ Annette Choi's article
 
 ## Figure 2
 
-```{r out.width="350px"}
+### Original
+
+```{r out.width="400px"}
 knitr::include_graphics(here("Images", "foul-balls", "choi-foul-0625-2-1.png"))
 ```
 
+\newpage 
+
+### Re-creation
 
 ```{r}
 foul_balls <- read.csv(here("Data", "foul-balls", "foul-balls.csv"))
@@ -338,18 +386,29 @@ foul_balls %>%
   mutate(Velocity_Cat = 
            case_when(exit_velocity<90 ~ 1
                      , exit_velocity>=90 ~ 2
-                     , TRUE ~ 3)) %>% 
+                     , TRUE ~ 3)
+         , Zone_f = case_when(
+           used_zone == 1 ~ "Zone 1"
+           , TRUE ~ as.character(used_zone)
+         )) %>% 
   mutate(fvc = factor(Velocity_Cat, levels=c(3, 2, 1))) %>% 
-  ggplot(aes(x=reorder(as.factor(used_zone), -used_zone), fill=fvc)) +
+  ggplot(aes(x=reorder(as.factor(Zone_f), -used_zone), fill=fvc)) +
   geom_bar() +
   scale_y_continuous(breaks=seq(0, 250, 50)
                      , position="right") + 
   scale_fill_manual(values=c("snow3", "steelblue2", "palegreen3")) + 
   coord_flip() +
-  ggthemes::theme_fivethirtyeight() + 
+  ylab("") + xlab("") + 
+  # ggthemes::theme_fivethirtyeight() +
   ggtitle(label="The hardest hit foul-balls seem to land in unprotected areas"
           , subtitle = "Foul balls by the stadium zone they landed in and their exit velocity, among 906\nfoul balls hit this season in the most foul-heavy day at the 10 MLB\nstadiums that produced the most fouls as of June 5") + 
-  theme(legend.position="none", plot.title = element_text(size=16)) +
+  theme(legend.position="none", plot.title = element_text(size=16)
+        , panel.background = element_rect(fill = 'white', color = 'white')
+        , panel.grid.major.x = element_line(colour = "gray", linewidth = 0.5)
+        , axis.text.y = element_text(face="bold", size = 12)
+        , axis.text.x = element_text(color="gray", face="bold")
+        , axis.ticks = element_blank()
+        ) +
   annotation_custom(g, xmin=1, xmax=3, ymin=210, ymax=320) +
   annotate("text", x = 7, y = 75, label="< 90 mph", col="white", size=5) + 
   annotate("text", x = 7, y = 215, label="Unknown exit velocity", col="white", size=5) +
@@ -361,6 +420,13 @@ foul_balls %>%
 \newpage 
 
 ## Summary/Analysis 
+
+For Annette Choi's article [We Watched 906 Fould Balls to Find Out Where the most Dangerous Ones Land](https://fivethirtyeight.com/features/we-watched-906-foul-balls-to-find-out-where-the-most-dangerous-ones-land/), I recreated only her final figure, which summarizes the landing spot of foul balls into Choi's defined "zones", startified by the exit velocity of the hit. 
+
+The data was immediately available and easy to use in generating this figure (i.e. only little wrangling necessary). The data contained three variables regarding the final "zones", with no indication in the article which was used to generate the figure (or in the analyses throughout the article). I settled on the `used_zone` variable, which uses the observed zone (`camera_zone`) of the foul ball when available and otherwise imputed a `predicted_zone` if the camera did not capture the final zone (and `camera_zone` was then missing). This imputation was discussed briefly in the article, but its use as the primary outcome variable was not mentioned explicitly in either the article or the figure. 
+
+Although I did not present the table and other figure, the table could be reproduced with the exception of the `stadium` column (although this could be inferred and created using the `matchup`'s home team). The ballpark figure could be recreated using the available data, although without shared code the method of creation of the ballpark figure is unknown and could only be approximated from the provided information. 
+
 
 
 
