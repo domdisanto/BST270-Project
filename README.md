@@ -5,6 +5,8 @@
 
 Individual project for BST270: Reproducible Data Science
 
+Final submission PDF can be accessed via GitHub at [Code/BST270_IndProject_DiSanto.pdf](/Code/BST270_IndProject_DiSanto.pdf) (
+https://github.com/domdisanto/BST270-Project/blob/main/Code/BST270_IndProject_DiSanto.pdf) or downloaded directly by [clicking this link](https://github.com/domdisanto/BST270-Project/raw/main/Code/BST270_IndProject_DiSanto.pdf).
 
 # Articles & Background
 
@@ -31,4 +33,4 @@ The notebook includes a brief critique/commentary on each article's reproducibil
 
 Data from Annette Choi's article can be found at https://github.com/fivethirtyeight/data/tree/master/foul-balls. The `foul-balls.csv` file was used to re-create the article's second figure.
 
-Neither article or analysis required data files that contain sensitive information, so I have also stored all data within my own repository under `Data` in project specific folders `tennis-times` and `foul-balls` respectively.
+Neither article or analysis required data files that contain sensitive information, so I have also stored all data within my own repository under `Data` in project specific folders `tennis-times` and `foul-balls` respectively. These folders include the respective `README` documentation for each article's data source.
