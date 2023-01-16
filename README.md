@@ -20,7 +20,9 @@ To the best of my ability, I attempt to match the formatting of the tables/figur
 
 # Code & Results
 
-Tables and figures were recreated using R, and a PDF output notebook generated using Quarto, all within RStudio. The output notebook is available in the [Code](/Code/) section of the repository as a PDF, which includes an Appendix of the code used for table/figure generation. The RMD file used to generate the notebook is also available as a standalone file in the [Code](/Code/) folder as well. 
+Tables and figures were recreated using R, and a PDF output notebook generated using Quarto, all within RStudio. The output notebook is available in the [Code](/Code/) section of the repository as a PDF, which includes an Appendix of the code used for table/figure generation. The RMD file used to generate the notebook is also available as a standalone file in the [Code](/Code/) folder as well.
+
+The notebook includes a brief critique/commentary on each article's reproducibility as well, in a Summary section for each respective article.
 
 
 # Data & Figures

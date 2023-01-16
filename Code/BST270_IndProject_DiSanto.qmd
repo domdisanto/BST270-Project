@@ -51,9 +51,12 @@ opts_chunk$set(delay = TRUE, echo = FALSE, message = FALSE, warning = FALSE,
 
 Tables were generated using the `kable` and `kableExtra` packages and dat visualizations using `ggplot2` from the Tidyverse. This document was generated using [Quarto](https://quarto.org/) in RStudio. Additional details are available in the Appendix (e.g. package versions, R/RStudio versions, etc.)
 
+Each article has a brief section that displays the original table(s) or figure from the table, my recreation of the same results, and a brief summary section commenting on the reproducibility
+
+
 \newpage 
 
-# "Why Some Tennis Matches Take Forever" (538)
+# "Why Some Tennis Matches Take Forever"
 
 From Carl Bialik's article ["Why Some Tennis Matches Take Forever"](https://fivethirtyeight.com/features/why-some-tennis-matches-take-forever/), we will recreate his two tables (included below). 
 
@@ -81,8 +84,7 @@ knitr::include_graphics(here("Images", "tennis-time", "bialik-tennis-time-table2
 
 
 
-The data used to recreate these tables is located in Bialik's provided `events.csv` file. The data was immediately available and well-formatted to corroborate these results and easily output tables that are similar to those in Bialik's original article.    
-
+The data used to recreate these tables is located in Bialik's provided `events.csv` file. 
 \newpage 
 
 
@@ -295,6 +297,19 @@ rbind(data.frame(t1=gt_fast, t2=gt_slow)
 
 \newpage
 
+## Summary/Analysis
+
+For Bialik's article on the pace of play in modern tennis, the data for the presented tables was immediately available and well-formatted to corroborate these results and easily output tables that are similar to those in Bialik's original article. The data used was sparse (with no additional information), which necessitated little documentation. 
+
+However considering the larger article, the two figures are presented without sufficient data to re-created. The provided data does not include any temporal data on player tendencies for the second figure, and the events data has been aggregated so that annual data is not available to create the first figure. The article also discusses regression modelling for pace of play but with no presentation of results or sharing of code to use in evaluating the model. 
+
+As an entertainment article, we obviously would not expect the same level of rigor for reproducibility as we might expect for a peer-reviewed publication or scientific article. The visualization and modelling are presented with no available data or thorough discussion of the methods to generate the results, while the tables in Bialik's article are easily reproduced from the shared materials. 
+
+
+
+
+
+\newpage 
 
 # "We Watched 906 Foul Balls To Find Out Where The Most Dangerous Ones Land"
 
@@ -342,9 +357,11 @@ foul_balls %>%
   
 ```
 
+
 \newpage 
 
-# Summary 
+## Summary/Analysis 
+
 
 
 \newpage 
