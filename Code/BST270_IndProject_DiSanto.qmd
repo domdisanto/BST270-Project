@@ -102,12 +102,10 @@ knitr::include_graphics(here("Images", "tennis-time", "bialik-tennis-time-table2
 
 ```
 
-
+\newpage 
 ### Re-creation
 
 The data used to recreate these tables is located in Bialik's provided `events.csv` file. 
-\newpage 
-
 
 ```{r}
 # Re-creation
@@ -357,7 +355,7 @@ As an entertainment article, we obviously would not expect the same level of rig
 # "We Watched 906 Foul Balls To Find Out Where The Most Dangerous Ones Land"
 
 
-Annette Choi's article 
+Data and analysis presented from Annette Choi's article [We Watched 906 Fould Balls to Find Out Where the most Dangerous Ones Land](https://fivethirtyeight.com/features/we-watched-906-foul-balls-to-find-out-where-the-most-dangerous-ones-land/). 
 
 ## Figure 2
 
