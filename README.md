@@ -25,6 +25,19 @@ Tables and figures were recreated using R, and a PDF output notebook generated u
 
 The notebook includes a brief critique/commentary on each article's reproducibility as well, in a Summary section for each respective article.
 
+To ensure data and code can run seamlessly, you should  follow the file structure of this repository, notably including the Data and Images folders.
+
+```
+.
+|
+- Data
+  |-- foul-balls
+  |-- tennis-time
+- Images
+  |-- foul-balls
+  |-- tennis-time
+- Code
+```
 
 # Data & Figures
 
