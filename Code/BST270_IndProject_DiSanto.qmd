@@ -152,31 +152,43 @@ events_ntbl <- events %>%
 
 
 ```{r}
-event_cols <- c("", "TOURNAMENT", "SURFACE", "YEARS RUNNING", "TIME ADDED")
+event_cols <- c("", "Tournament", "Surface", "Years Running", "Time Added")
 
 events_10f %>% 
-  kable(col.names=event_cols, booktabs=T) %>%
-  kable_styling(latex_options = c("striped", "HOLD_position")) %>% 
-  add_header_above(c("Fastest tournaments"=5)) %>%
-  row_spec(0, align="l")
+  kable(col.names=event_cols
+        # , bottomrule=''
+        , booktabs=T
+        ) %>%
+  kable_styling(latex_options = "HOLD_position") %>% 
+  add_header_above(c("Fastest tournaments"=5), align = "l"
+                   , bold = T
+                   , underline = F, line = F) 
 ```
 
 
 ```{r}
 events_10s %>%   
-  kable(col.names=event_cols, booktabs=T) %>%
-  kable_styling(latex_options = c("striped", "HOLD_position")) %>% 
-  add_header_above(c("Slowest tournaments"=5)) %>% 
-  row_spec(0, align="l")
+  kable(col.names=event_cols
+        # , bottomrule=''
+        , booktabs=T
+        ) %>%
+  kable_styling(latex_options = "HOLD_position") %>% 
+  add_header_above(c("Slowest tournaments"=5), align = "l"
+                   , bold = T
+                   , underline = F, line = F) 
 ```
 
 
 ```{r}
 events_ntbl %>%
-  kable(col.names=event_cols, booktabs=T) %>% 
-  kable_styling(latex_options = c("striped", "HOLD_position")) %>% 
-  add_header_above(c("Other notable tournaments"=5)) %>% 
-  row_spec(0, align="l")
+  kable(col.names=event_cols
+        # , bottomrule=''
+        , booktabs=T
+        ) %>%
+  kable_styling(latex_options = "HOLD_position") %>% 
+  add_header_above(c("Other notable tournaments"=5), align = "l"
+                   , bold = T
+                   , underline = F, line = F) 
 ```
 
 
@@ -218,7 +230,7 @@ t10_f <- players %>%
   arrange(seconds_added_per_point) %>% # sort ascending 
   head(10) %>% # top 10
   mutate(seconds = # reformatting as above
-           case_when(row_number()==1 ~ paste0("+", sprintf("%0.2f", seconds_added_per_point)
+           case_when(row_number()==1 ~ paste0(sprintf("%0.2f", seconds_added_per_point)
                                               , "s")
                      , T ~ sprintf("%0.2f"
                                    , seconds_added_per_point)
@@ -264,16 +276,26 @@ tbl_pls <- players %>%
 #| layout-ncol: 2
 
 t10_f %>% 
-  kable(col.names=NULL, booktabs=T) %>%
-  kable_styling(latex_options = c("striped", "HOLD_position")) %>% 
-  add_header_above(c("Fastest players"=3)) %>%
-  row_spec(0, align="l") 
+  kable(col.names=NULL
+        # , bottomrule=''
+        , booktabs=T
+        ) %>%
+  kable_styling(latex_options ="HOLD_position") %>% 
+  add_header_above(c("Fastest players"=3)
+                   , bold=T, align="l"
+                   , underline=F, line=F
+                   ) 
 
 t10_s %>%   
-  kable(col.names=NULL, booktabs=T) %>%
-  kable_styling(latex_options = c("striped", "HOLD_position")) %>% 
-  add_header_above(c("Slowest players"=3)) %>% 
-  row_spec(0, align="l")
+  kable(col.names=NULL
+        # , bottomrule=''
+        , booktabs=T
+        ) %>%
+  kable_styling(latex_options ="HOLD_position") %>% 
+  add_header_above(c("Slowest players"=3)
+                   , bold=T, align="l"
+                   , underline=F, line=F
+                   ) 
 ```
 
 
@@ -281,10 +303,15 @@ t10_s %>%
 #| layout-ncol: 2
 
 tbl_pls %>%
-  kable(col.names=NULL, booktabs=T) %>% 
-  kable_styling(latex_options = c("striped", "HOLD_position")) %>% 
-  add_header_above(c("Other notable players"=3)) %>% 
-  row_spec(0, align="l")
+  kable(col.names=NULL
+        # , bottomrule=''
+        , booktabs=T
+        ) %>%
+  kable_styling(latex_options ="HOLD_position") %>% 
+  add_header_above(c("Other notable players"=3)
+                   , bold=T, align="l"
+                   , underline=F, line=F
+                   ) 
 ```
 
 We see our results mirror those in Bialik's original article exactly, and we were able to easily identify and match the data to recreate these tables from the provided GitHub repository (even without any code given by the author). 
