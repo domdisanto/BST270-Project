@@ -23,7 +23,7 @@ To the best of my ability, I attempt to match the formatting of the tables/figur
 
 Tables and figures were recreated using R, and a PDF output notebook generated using Quarto, all within RStudio. It is necessary to download and set-up Quarto within RStudio ([with useful documentation located on Quarto's website](https://quarto.org/docs/get-started/)).
 
-If Quarto is not installed, saving the file as an RMarkdown file (with extension `.rmd` rather than `.qmd`) should also allow the file to knit to PDF. This has been successfully tested locally. 
+If Quarto is not installed, saving the file as an RMarkdown file (with extension `.rmd` rather than `.qmd`) should also allow the file to knit to PDF. This has been successfully tested locally (again within RStudio, using the `knitr` package).
 
 The output notebook is available in the [Code](/Code/) section of the repository as a PDF, which includes an Appendix of the code used for table/figure generation. The RMD file used to generate the notebook is also available as a standalone file in the [Code](/Code/) folder as well.
 
