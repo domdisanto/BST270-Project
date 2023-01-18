@@ -446,6 +446,8 @@ sessionInfo()
 
 ## B: Code
 
-```{r codeprint, echo = TRUE, eval = FALSE, ref.label = delay_code_labels, delay = FALSE}
 
+```{r codeprint, echo = TRUE, eval = F, ref.label = delay_code_labels, delay = FALSE}
 ```
+
+
