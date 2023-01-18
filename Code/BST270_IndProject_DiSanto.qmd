@@ -56,6 +56,8 @@ library(knitr)
 
 Tables were generated using the `kable` and `kableExtra` packages and dat visualizations using `ggplot2` from the Tidyverse. This document was generated using [Quarto](https://quarto.org/) in RStudio. Additional details are available in the Appendix (e.g. package versions, R/RStudio versions, etc.)
 
+The `here` package has been used to load files, which *should* be robust to different operating systems, users, etc. as long as the file structure of this project (as described in the `README`) is followed. If issues persist, all specified file paths can be easily found searching for `here(` within this document and replacing with the user's preferred method of file path specification. 
+
 Each article has a brief section that displays the original table(s) or figure from the table, my recreation of the same results, and a brief summary section commenting on the reproducibility
 
 \newpage

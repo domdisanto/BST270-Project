@@ -42,6 +42,9 @@ To ensure data and code can run seamlessly, you should  follow the file structur
 - Code
 ```
 
+Detailed information concerning versions of R, Rstudio, and relevant packages are included in Appendix of the knitted PDF document. 
+
+
 # Data & Figures
 
 (Limited) data from Bialik's article are available on GitHub at https://github.com/fivethirtyeight/data/tree/master/tennis-time. The `events.csv` and `players.csv` files were used as noted in the analytic code for each respective, re-created table.
