@@ -23,6 +23,7 @@ To the best of my ability, I attempt to match the formatting of the tables/figur
 
 Tables and figures were recreated using R, and a PDF output notebook generated using Quarto, all within RStudio. It is necessary to download and set-up Quarto within RStudio ([with useful documentation located on Quarto's website](https://quarto.org/docs/get-started/)).
 
+If Quarto is not installed, saving the file as an RMarkdown file (with extension `.rmd` rather than `.qmd`) should also allow the file to knit to PDF. This has been successfully tested locally. 
 
 The output notebook is available in the [Code](/Code/) section of the repository as a PDF, which includes an Appendix of the code used for table/figure generation. The RMD file used to generate the notebook is also available as a standalone file in the [Code](/Code/) folder as well.
 
@@ -42,7 +43,7 @@ To ensure data and code can run seamlessly, you should  follow the file structur
 - Code
 ```
 
-Detailed information concerning versions of R, Rstudio, and relevant packages are included in Appendix of the knitted PDF document. 
+Detailed information concerning versions of R, Rstudio, and relevant packages are included in Appendix of the knitted PDF document.
 
 
 # Data & Figures
