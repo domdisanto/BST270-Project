@@ -22,7 +22,6 @@ editor: visual
 
 # Set-Up
 
-
 ```{r, echo=F}
 # chunk to hide code and display at end, under Appendix Section A 
 library(knitr)
@@ -53,20 +52,17 @@ library(kableExtra) # LaTeX/PDF table styling
 library(knitr)
 ```
 
-
-
 # Preface
 
 Tables were generated using the `kable` and `kableExtra` packages and dat visualizations using `ggplot2` from the Tidyverse. This document was generated using [Quarto](https://quarto.org/) in RStudio. Additional details are available in the Appendix (e.g. package versions, R/RStudio versions, etc.)
 
 Each article has a brief section that displays the original table(s) or figure from the table, my recreation of the same results, and a brief summary section commenting on the reproducibility
 
-
-\newpage 
+\newpage
 
 # "Why Some Tennis Matches Take Forever"
 
-From Carl Bialik's article ["Why Some Tennis Matches Take Forever"](https://fivethirtyeight.com/features/why-some-tennis-matches-take-forever/), we will recreate his two tables (included below). 
+From Carl Bialik's article ["Why Some Tennis Matches Take Forever"](https://fivethirtyeight.com/features/why-some-tennis-matches-take-forever/), we will recreate his two tables (included below).
 
 ```{r}
 ###################
@@ -81,14 +77,11 @@ players <- read.csv(here("Data", "tennis-time", "players_time.csv")) %>%
             # above), descending (1=fastest player, lowest `seconds_added_per_point`)
 ```
 
+## Table 1: Events
 
-## Table 1: Events 
+### Original
 
-
-### Original 
-
-We will first look at the original table from Bialik's article: 
-
+We will first look at the original table from Bialik's article:
 
 ```{r out.width="300px"}
 
@@ -102,10 +95,11 @@ knitr::include_graphics(here("Images", "tennis-time", "bialik-tennis-time-table2
 
 ```
 
-\newpage 
+\newpage
+
 ### Re-creation
 
-The data used to recreate these tables is located in Bialik's provided `events.csv` file. 
+The data used to recreate these tables is located in Bialik's provided `events.csv` file.
 
 ```{r}
 # Re-creation
@@ -150,7 +144,6 @@ events_ntbl <- events %>%
 
 ```
 
-
 ```{r}
 event_cols <- c("", "Tournament", "Surface", "Years Running", "Time Added")
 
@@ -165,7 +158,6 @@ events_10f %>%
                    , underline = F, line = F) 
 ```
 
-
 ```{r}
 events_10s %>%   
   kable(col.names=event_cols
@@ -177,7 +169,6 @@ events_10s %>%
                    , bold = T
                    , underline = F, line = F) 
 ```
-
 
 ```{r}
 events_ntbl %>%
@@ -191,13 +182,11 @@ events_ntbl %>%
                    , underline = F, line = F) 
 ```
 
-
 \newpage
-
 
 ## Table 2: Players
 
-### Original 
+### Original
 
 Again, we first we can review the original table(s) presented in the article:
 
@@ -214,7 +203,7 @@ knitr::include_graphics(here("Images", "tennis-time", "bialik-tennis-time-table1
 
 ```
 
-\newpage 
+\newpage
 
 ### Re-creation
 
@@ -271,7 +260,6 @@ tbl_pls <- players %>%
 
 ```
 
-
 ```{r}
 #| layout-ncol: 2
 
@@ -298,7 +286,6 @@ t10_s %>%
                    ) 
 ```
 
-
 ```{r}
 #| layout-ncol: 2
 
@@ -314,7 +301,7 @@ tbl_pls %>%
                    ) 
 ```
 
-We see our results mirror those in Bialik's original article exactly, and we were able to easily identify and match the data to recreate these tables from the provided GitHub repository (even without any code given by the author). 
+We see our results mirror those in Bialik's original article exactly, and we were able to easily identify and match the data to recreate these tables from the provided GitHub repository (even without any code given by the author).
 
 <!-- We now must arrange the tables, set custom options to attempt to mirror the 538 style, and include the descriptive information to mirror the image as presented in Biakis's article. I use the `gt` package, which allows me to supply custom styling and arrange each individual table together into one image/table. -->
 
@@ -367,22 +354,17 @@ rbind(data.frame(t1=gt_fast, t2=gt_slow)
 
 ## Summary/Analysis
 
-For Bialik's article on the pace of play in modern tennis, the data for the presented tables was immediately available and well-formatted to corroborate these results and easily output tables that are similar to those in Bialik's original article. The data used was sparse (with no additional information), which necessitated little documentation. 
+For Bialik's article on the pace of play in modern tennis, the data for the presented tables was immediately available and well-formatted to corroborate these results and easily output tables that are similar to those in Bialik's original article. The data used was sparse (with no additional information), which necessitated little documentation.
 
-However considering the larger article, the two figures are presented without sufficient data to re-created. The provided data does not include any temporal data on player tendencies for the second figure, and the events data has been aggregated so that annual data is not available to create the first figure. The article also discusses regression modelling for pace of play but with no presentation of results or sharing of code to use in evaluating the model. 
+However considering the larger article, the two figures are presented without sufficient data to re-created. The provided data does not include any temporal data on player tendencies for the second figure, and the events data has been aggregated so that annual data is not available to create the first figure. The article also discusses regression modelling for pace of play but with no presentation of results or sharing of code to use in evaluating the model.
 
-As an entertainment article, we obviously would not expect the same level of rigor for reproducibility as we might expect for a peer-reviewed publication or scientific article. The visualization and modelling are presented with no available data or thorough discussion of the methods to generate the results, while the tables in Bialik's article are easily reproduced from the shared materials. 
+As an entertainment article, we obviously would not expect the same level of rigor for reproducibility as we might expect for a peer-reviewed publication or scientific article. The visualization and modelling are presented with no available data or thorough discussion of the methods to generate the results, while the tables in Bialik's article are easily reproduced from the shared materials.
 
-
-
-
-
-\newpage 
+\newpage
 
 # "We Watched 906 Foul Balls To Find Out Where The Most Dangerous Ones Land"
 
-
-Data and analysis presented from Annette Choi's article [We Watched 906 Fould Balls to Find Out Where the most Dangerous Ones Land](https://fivethirtyeight.com/features/we-watched-906-foul-balls-to-find-out-where-the-most-dangerous-ones-land/). 
+Data and analysis presented from Annette Choi's article [We Watched 906 Fould Balls to Find Out Where the most Dangerous Ones Land](https://fivethirtyeight.com/features/we-watched-906-foul-balls-to-find-out-where-the-most-dangerous-ones-land/).
 
 ## Figure 2
 
@@ -392,14 +374,13 @@ Data and analysis presented from Annette Choi's article [We Watched 906 Fould Ba
 knitr::include_graphics(here("Images", "foul-balls", "choi-foul-0625-2-1.png"))
 ```
 
-\newpage 
+\newpage
 
 ### Re-creation
 
 ```{r}
 foul_balls <- read.csv(here("Data", "foul-balls", "foul-balls.csv"))
 ```
-
 
 ```{r fig.width=8, fig.pos="h"}
 library(png); library(grid)
@@ -441,21 +422,17 @@ foul_balls %>%
   
 ```
 
+\newpage
 
-\newpage 
+## Summary/Analysis
 
-## Summary/Analysis 
+For Annette Choi's article [We Watched 906 Fould Balls to Find Out Where the most Dangerous Ones Land](https://fivethirtyeight.com/features/we-watched-906-foul-balls-to-find-out-where-the-most-dangerous-ones-land/), I recreated only her final figure, which summarizes the landing spot of foul balls into Choi's defined "zones", startified by the exit velocity of the hit.
 
-For Annette Choi's article [We Watched 906 Fould Balls to Find Out Where the most Dangerous Ones Land](https://fivethirtyeight.com/features/we-watched-906-foul-balls-to-find-out-where-the-most-dangerous-ones-land/), I recreated only her final figure, which summarizes the landing spot of foul balls into Choi's defined "zones", startified by the exit velocity of the hit. 
+The data was immediately available and easy to use in generating this figure (i.e. only little wrangling necessary). The data contained three variables regarding the final "zones", with no indication in the article which was used to generate the figure (or in the analyses throughout the article). I settled on the `used_zone` variable, which uses the observed zone (`camera_zone`) of the foul ball when available and otherwise imputed a `predicted_zone` if the camera did not capture the final zone (and `camera_zone` was then missing). This imputation was discussed briefly in the article, but its use as the primary outcome variable was not mentioned explicitly in either the article or the figure.
 
-The data was immediately available and easy to use in generating this figure (i.e. only little wrangling necessary). The data contained three variables regarding the final "zones", with no indication in the article which was used to generate the figure (or in the analyses throughout the article). I settled on the `used_zone` variable, which uses the observed zone (`camera_zone`) of the foul ball when available and otherwise imputed a `predicted_zone` if the camera did not capture the final zone (and `camera_zone` was then missing). This imputation was discussed briefly in the article, but its use as the primary outcome variable was not mentioned explicitly in either the article or the figure. 
+Although I did not present the table and other figure, the table could be reproduced with the exception of the `stadium` column (although this could be inferred and created using the `matchup`'s home team). The ballpark figure could be recreated using the available data, although without shared code the method of creation of the ballpark figure is unknown and could only be approximated from the provided information.
 
-Although I did not present the table and other figure, the table could be reproduced with the exception of the `stadium` column (although this could be inferred and created using the `matchup`'s home team). The ballpark figure could be recreated using the available data, although without shared code the method of creation of the ballpark figure is unknown and could only be approximated from the provided information. 
-
-
-
-
-\newpage 
+\newpage
 
 # Appendix
 
@@ -465,8 +442,8 @@ Although I did not present the table and other figure, the table could be reprod
 sessionInfo()
 ```
 
-
 ## B: Code
+
 ```{r codeprint, echo = TRUE, eval = FALSE, ref.label = delay_code_labels, delay = FALSE}
 
-``` 
+```
