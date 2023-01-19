@@ -7,7 +7,13 @@ Individual project for BST270: Reproducible Data Science
 
 Final submission PDF can be accessed via GitHub at [Code/BST270_IndProject_DiSanto.pdf](/Code/BST270_IndProject_DiSanto.pdf) or downloaded directly by [clicking this link](https://github.com/domdisanto/BST270-Project/raw/main/Code/BST270_IndProject_DiSanto.pdf).
 
-Note for the code to execute properly (and re-create the initial results notebook), both the Data and Images folder must be downloaded (with further detail provided in the Code & Results section of this ReadMe). 
+Note for the code to execute properly (and re-create the initial results notebook), both the Data and Images folder must be downloaded (with further detail provided in the Code & Results section of this ReadMe).
+
+Necessary Steps for Reproduction (see *Code & Results* section for more details)
+1) Data & Images folders downloaded
+2) RStudio & R installed
+3) RTools installed  
+4) Quarto installed or notebook re-saved as RMD file
 
 # Articles & Background
 
@@ -26,6 +32,8 @@ To the best of my ability, I attempt to match the formatting of the tables/figur
 Tables and figures were recreated using R, and a PDF output notebook generated using Quarto, all within RStudio. It is necessary to download and set-up Quarto within RStudio ([with useful documentation located on Quarto's website](https://quarto.org/docs/get-started/)).
 
 If Quarto is not installed, saving the file as an RMarkdown file (with extension `.rmd` rather than `.qmd`) should also allow the file to knit to PDF. This has been successfully tested locally (again within RStudio, using the `knitr` package).
+
+I have not tested this code on a machine without RTools, so intallaiton of [RTools](https://cran.r-project.org/bin/windows/Rtools/) may also be necessary for code to properly execute (especially if required packages have not yet been installed on your mcahine).  
 
 The output notebook is available in the [Code](/Code/) section of the repository as a PDF, which includes an Appendix of the code used for table/figure generation. The RMD file used to generate the notebook is also available as a standalone file in the [Code](/Code/) folder as well.
 
