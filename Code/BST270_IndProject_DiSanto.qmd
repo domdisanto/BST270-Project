@@ -54,9 +54,9 @@ library(knitr)
 
 # Preface
 
-Tables were generated using the `kable` and `kableExtra` packages and dat visualizations using `ggplot2` from the Tidyverse. This document was generated using [Quarto](https://quarto.org/) in RStudio. Additional details are available in the Appendix (e.g. package versions, R/RStudio versions, etc.)
+Tables were generated using the `kable` and `kableExtra` packages and data visualizations using `ggplot2` from the Tidyverse. This document was generated using [Quarto](https://quarto.org/) in RStudio. Additional details are available in the Appendix (e.g. package versions, R/RStudio versions, etc.)
 
-The `here` package has been used to load files, which *should* be robust to different operating systems, users, etc. as long as the file structure of this project (as described in the `README`) is followed. If issues persist, all specified file paths can be easily found searching for `here(` within this document and replacing with the user's preferred method of file path specification. 
+The `here` package has been used to load files, which *should* be robust to different operating systems, users, etc. as long as the file structure of this project (as described in the `README`) is followed. If issues persist, all specified file paths can be easily found searching for `here(` within this document and replacing with the user's preferred method of file path specification.
 
 Each article has a brief section that displays the original table(s) or figure from the table, my recreation of the same results, and a brief summary section commenting on the reproducibility
 
@@ -305,52 +305,7 @@ tbl_pls %>%
 
 We see our results mirror those in Bialik's original article exactly, and we were able to easily identify and match the data to recreate these tables from the provided GitHub repository (even without any code given by the author).
 
-<!-- We now must arrange the tables, set custom options to attempt to mirror the 538 style, and include the descriptive information to mirror the image as presented in Biakis's article. I use the `gt` package, which allows me to supply custom styling and arrange each individual table together into one image/table. -->
 
-```{r, include=F}
-# Initially used the gt package to create prettier HTML tables 
-# The assignment prompt asks for a PDF, so keeping this code for reference
-# but not including it in the final, knitted document 
-
-library(gt)
-library(gtExtras)
-
-gt_fast <- t10_f %>% 
-  gt() %>% 
-  gt::tab_header("Fastest players") %>% 
-  gt::tab_options(column_labels.hidden = T) %>% 
-  gt_theme_538() %>% 
-  gt::as_raw_html()
-
-gt_slow <- t10_s %>% 
-  gt() %>% 
-  gt::tab_header("Slowest players") %>% 
-  gt::tab_options(column_labels.hidden = T) %>% 
-  gt_theme_538() %>% 
-  gt::as_raw_html()
-
-
-gt_ntbl <- tbl_pls %>% 
-  gt() %>% 
-  gt::tab_header("Other notable players") %>% 
-  gt::tab_options(column_labels.hidden = T) %>% 
-  gt_theme_538() %>% 
-  gt::as_raw_html()
-
-rbind(data.frame(t1=gt_fast, t2=gt_slow)
-      , data.frame(t1=gt_ntbl, t2="")) %>%
-# data.frame(gtf=c(gt_fast, gt_ntbl), gts=c(gt_slow, '')) %>%
-  gt() %>%
-  gt::tab_header(title = "Player Speeds"
-                 , subtitle="Average time added per point in men's tennis"
-                 ) %>%
-  opt_align_table_header(align = "left") %>%
-  fmt_markdown(columns=everything()) %>%
-  gt::tab_options(column_labels.hidden=T) %>%
-  gtExtras::gt_theme_538() %>%
-  gt::tab_style(style = list(cell_text(weight="bold"))
-                , location=cells_body(columns=1) )
-```
 
 \newpage
 
@@ -428,7 +383,7 @@ foul_balls %>%
 
 ## Summary/Analysis
 
-For Annette Choi's article [We Watched 906 Fould Balls to Find Out Where the most Dangerous Ones Land](https://fivethirtyeight.com/features/we-watched-906-foul-balls-to-find-out-where-the-most-dangerous-ones-land/), I recreated only her final figure, which summarizes the landing spot of foul balls into Choi's defined "zones", startified by the exit velocity of the hit.
+For Annette Choi's article [We Watched 906 Fould Balls to Find Out Where the most Dangerous Ones Land](https://fivethirtyeight.com/features/we-watched-906-foul-balls-to-find-out-where-the-most-dangerous-ones-land/), I recreated only her final figure, which summarizes the landing spot of foul balls into Choi's defined "zones", stratified by the exit velocity of the hit.
 
 The data was immediately available and easy to use in generating this figure (i.e. only little wrangling necessary). The data contained three variables regarding the final "zones", with no indication in the article which was used to generate the figure (or in the analyses throughout the article). I settled on the `used_zone` variable, which uses the observed zone (`camera_zone`) of the foul ball when available and otherwise imputed a `predicted_zone` if the camera did not capture the final zone (and `camera_zone` was then missing). This imputation was discussed briefly in the article, but its use as the primary outcome variable was not mentioned explicitly in either the article or the figure.
 
@@ -446,8 +401,5 @@ sessionInfo()
 
 ## B: Code
 
-
 ```{r codeprint, echo = TRUE, eval = F, ref.label = delay_code_labels, delay = FALSE}
 ```
-
-
