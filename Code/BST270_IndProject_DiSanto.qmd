@@ -24,6 +24,7 @@ editor: visual
 
 ```{r, echo=F}
 # chunk to hide code and display at end, under Appendix Section A 
+if(!("knitr" %in% installed.packages()[,"Package"])) install.packages("knitr")
 library(knitr)
 
 delay_code_labels <- NULL
@@ -43,6 +44,12 @@ opts_chunk$set(delay = TRUE, echo = FALSE, message = FALSE, warning = FALSE,
 ################ 
 #### Set-Up ####
 ################
+
+list.of.packages <- c("here", "ggplot2", "dplyr", "stringr", "kableExtra", "knitr")
+
+new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
+
+if(length(new.packages)>0) install.packages(new.packages)
 
 library(here) # used for file management
 library(ggplot2) # data visualization 
@@ -304,8 +311,6 @@ tbl_pls %>%
 ```
 
 We see our results mirror those in Bialik's original article exactly, and we were able to easily identify and match the data to recreate these tables from the provided GitHub repository (even without any code given by the author).
-
-
 
 \newpage
 
